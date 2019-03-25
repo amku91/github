@@ -141,9 +141,9 @@ class Navbar extends React.Component {
                 <Menu.Menu>
                     <Menu.Item>
                         {this.state.menuConfig.showSearchbar &&
-                            <div className='Navbar-search' aria-expanded='false' tabIndex='0'>
-                                <Input icon={null} className='Navbar-search-box' size='small' placeholder='Search or jump to...' onClick={() => this.enlargeInputBox()} onBlur={() => this.enlargeInputBox()} />
-                                {!this.state.hideSearchBarImage && <img src="https://github.githubassets.com/images/search-key-slash.svg" alt="" className='Header-search-key-slash' />
+                            <div className='navbar-search' aria-expanded='false' tabIndex='0'>
+                                <Input icon={null} className='navbar-search-box' size='small' placeholder='Search or jump to...' onClick={() => this.enlargeInputBox()} onBlur={() => this.enlargeInputBox()} />
+                                {!this.state.hideSearchBarImage && <img src="https://github.githubassets.com/images/search-key-slash.svg" alt="" className='header-search-key-slash' />
                                 }
                             </div>
                         }

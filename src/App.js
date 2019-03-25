@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Navbar from './components/shared/Navbar';
+import UserProfile from './components/user_profile/UserProfile';
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 /**Include env files */
@@ -38,6 +39,7 @@ class App extends Component {
     return (
       <Router>
         <Navbar username={this.state.username} avatar_url={this.state.avatar_url} />
+        <UserProfile userData={this.state.userData} />
       </Router>
     );
 
