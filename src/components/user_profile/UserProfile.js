@@ -1,15 +1,19 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import { Grid, Divider, Icon, List, Button, Tab, Menu, Label } from 'semantic-ui-react';
+import { Grid, Divider, Icon, List, Button, Tab, Menu, Label, Container } from 'semantic-ui-react';
 import ImageStatus from '../image_status/ImageStatus';
+import Overview from '../overview/Overview';
+import Repositories from '../repositories/Repositories';
+import Projects from '../projects/Projects';
 import './UserProfile.css';
 
 class UserProfile extends React.Component {
     constructor(props) {
         super(props);
-        console.log(this.props);
-        this.state = {};
+        this.state = {
+            reposData: [],
+        };
     }
     componentWillReceiveProps(nextProps) {
         console.log("NEXT PROPS GET CALLED");
@@ -29,7 +33,9 @@ class UserProfile extends React.Component {
             panesData: [
                 {
                   menuItem: { key: 'overview', icon: null, content: 'Overview' },
-                  render: () => <Tab.Pane>Overview Content</Tab.Pane>,
+                  render: () => <Tab.Pane>
+                      {this.state.reposData.length && <Overview username={this.state.userData.login} reposData={this.state.reposData} />}
+                  </Tab.Pane>,
                 },
                 {
                   menuItem: (
@@ -37,7 +43,9 @@ class UserProfile extends React.Component {
                       Repositories<Label>19</Label>
                     </Menu.Item>
                   ),
-                  render: () => <Tab.Pane>Repositories Content</Tab.Pane>,
+                  render: () => <Tab.Pane>
+                    {this.state.reposData.length && <Repositories username={this.state.userData.login} reposData={this.state.reposData} />}
+                  </Tab.Pane>,
                 },
                 {
                     menuItem: (
@@ -45,7 +53,9 @@ class UserProfile extends React.Component {
                         Projects<Label>0</Label>
                       </Menu.Item>
                     ),
-                    render: () => <Tab.Pane>Projects Content</Tab.Pane>,
+                    render: () => <Tab.Pane>
+                      {this.state.reposData.length && <Projects />
+                    </Tab.Pane>,
                 },
                 {
                     menuItem: (
@@ -74,6 +84,23 @@ class UserProfile extends React.Component {
               ]
         });
     }
+    componentDidMount() {
+        let userDataUrl = process.env.REACT_APP_GITHUB_URL + "users/" + process.env.REACT_APP_GITHUB_USER + "/repos";
+        fetch(userDataUrl)
+          .then(res => res.json())
+          .then(
+            (data) => {
+                console.log("REPOS DATA");
+                console.log(data);
+              this.setState({
+                reposData: data.sort((a,b) => {return (b.stargazers_count - a.stargazers_count)})
+              });
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+      }
     render() {
         if (!this.state.imageData)
             return null;
@@ -104,18 +131,18 @@ class UserProfile extends React.Component {
                                 <List.Item icon='marker' content='Banglore, IN' />
                                 <List.Item
                                     icon='mail'
-                                    content={<a href='mailto:akchoudhary966@gmail.com'>jack@semantic-ui.com</a>}
+                                    content={<a href='mailto:akchoudhary966@gmail.com'>akchoudhary966@gmail.com</a>}
                                 />
-                                <List.Item icon='linkify' content={<a href='https://amku91.github.io/'>semantic-ui.com</a>} />
+                                <List.Item icon='linkify' content={<a href='https://amku91.github.io/'>amku91.github.io</a>} />
                             </List>
                         </div>
                         <Divider />
                         <div className='user-organization'>
                             <h2 className='user-organization-name'></h2>
                             <h2 className='user-organization-imagez'>
-                                <img src="https://avatars0.githubusercontent.com/u/4183553?s=70&amp;v=4" class="avatar" width="35" height="35" alt="@opensourcedesign" />
-                                <img src="https://avatars3.githubusercontent.com/u/6295529?s=70&amp;v=4" class="avatar" width="35" height="35" alt="@fossasia" />
-                                <img src="https://avatars0.githubusercontent.com/u/18506046?s=70&amp;v=4" class="avatar" width="35" height="35" alt="@OpenGenus" />
+                                <img src="https://avatars0.githubusercontent.com/u/4183553?s=70&amp;v=4" className="avatar" width="35" height="35" alt="@opensourcedesign" />
+                                <img src="https://avatars3.githubusercontent.com/u/6295529?s=70&amp;v=4" className="avatar" width="35" height="35" alt="@fossasia" />
+                                <img src="https://avatars0.githubusercontent.com/u/18506046?s=70&amp;v=4" className="avatar" width="35" height="35" alt="@OpenGenus" />
                             </h2>
                         </div>
                     </Grid.Column>
