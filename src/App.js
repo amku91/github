@@ -18,7 +18,7 @@ class App extends Component {
     };
   }
   componentDidMount() {
-    let userDataUrl = process.env.REACT_APP_GITHUB_URL + "users/" + process.env.REACT_APP_GITHUB_USER;
+    let userDataUrl = process.env.REACT_APP_GITHUB_URL + "users/" + process.env.REACT_APP_GITHUB_USER + "?access_token=" + encodeURIComponent(process.env.REACT_APP_GITHUB_TOKEN);;
     fetch(userDataUrl)
       .then(res => res.json())
       .then(

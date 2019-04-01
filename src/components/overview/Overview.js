@@ -2,9 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Placeholder, Container, Grid, Segment, Icon } from 'semantic-ui-react';
+import RandomColorCircle from '../random_color_circle/RandomColorCircle';
 import './Overview.css';
 
-const Overview = ({ username, reposData }) => {
+const Overview = ({ reposData }) => {
+    var uniqueLanguage = Array.from(new Set(reposData.map(item => {return item.language})));
+    console.log(uniqueLanguage);
+    var colorMap = new Map();
+    uniqueLanguage.map(lang => {
+        colorMap.set(lang, (RandomColorCircle(0,0, true)).props["data-color"]);
+    });
     var slicedRepoData = reposData.slice(0, 10);
     /**Show only 6 repos */
     var chunkedRepos = _.chunk(slicedRepoData, 2);
@@ -13,8 +20,10 @@ const Overview = ({ username, reposData }) => {
             <Container>
                 <Grid>
                     <Grid.Row>
-                        <div className='overview-popular-repos'>Popular repositories </div>
-                        <div className='overview-customize-repos'>Customize your pins </div>
+                        <div className='overview-header'>
+                        <span className='overview-popular-repos'>Popular repositories </span>
+                        <span className='overview-customize-repos'>Customize your pins </span>
+                        </div>
                     </Grid.Row>
                 </Grid>
                 {chunkedRepos.map((chunk, index) => {
@@ -22,11 +31,15 @@ const Overview = ({ username, reposData }) => {
                             <Grid.Row stretched>
                         {chunk.map((repo, i) => {
                             return <Grid.Column>
-                                <Segment raised>
-                                    <h4>{repo.name}</h4>
-                                    {repo.fork && <span>Forked from amku91/{repo.name}</span>}
+                                <Segment className='overview-repo-card'>
+                                    <a className='text-blue' href={repo.url}>{repo.name}</a>
+                                    {repo.fork && <div>Forked from <span className='text-blue'>amku91/{repo.name}</span></div>}
                                     <p>{repo.description}</p>
-                                    <div><span>{repo.language}</span><span><Icon name='star' />{repo.stargazers_count}</span></div>
+                                    <div className='overview-repo-card-footer'>
+                                        { repo.language && <span className='overview-repo-card-footer-left'><RandomColorCircle width={"12px"} height={"12px"} colorHex={colorMap.get(repo.language)} /></span>}
+                                        { repo.language && <spna className='overview-repo-card-footer-middle'>{repo.language}</spna>}
+                                        <span className='overview-repo-card-footer-right'><Icon name='star' />{repo.stargazers_count}</span>
+                                    </div>
                                 </Segment>
                             </Grid.Column>
                         })}
@@ -62,7 +75,6 @@ const Overview = ({ username, reposData }) => {
 };
 
 Overview.propTypes = {
-    username: PropTypes.string.isRequired,
     reposData: PropTypes.arrayOf(Object).isRequired
 };
 

@@ -1,0 +1,80 @@
+.user-page-container{
+ padding-top: 11vh !important;
+}
+
+.vcard-name {
+    font-size: 26px;
+    font-weight: 400 !important;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.vcard-username {
+    color: #666;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+}
+
+.d-block{
+    display: block;
+}
+
+.vcard-meta-member{
+    padding-top: 8px !important;
+    padding-bottom: 16px !important;
+}
+
+.vcard-meta-bio{
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.vcard-personal-details{
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.user-organization-name{
+    margin: 0px !important;
+    padding: 0px !important;
+    font-weight: 600 !important;
+    font-size: 16px;
+}
+.user-organization-images{
+    width: 100% !important;
+    margin-top: 0px !important;
+}
+.user-organization-images img{
+    margin-right: 8px;
+    margin-top: 8px;
+}
+
+.ui.secondary.pointing.menu .active.item{
+    border-bottom-color: #e36209 !important;
+    color: #24292e !important;
+    font-weight: 600 !important;
+}
+.ui.menu .item .label{
+    background-color: rgba(27,31,35,.08) !important;
+    border-radius: 20px;
+    color: #586069 !important;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    padding: 2px 5px;
+}
+
+.ui.segment {
+    box-shadow: none !important;
+}
+.ui.attached.segment{
+    border: none !important;
+}
+.ui.grid>.column:not(.row), .ui.grid>.row>.column {
+    padding-left: 0px !important;
+}
+.ui.grid>.row {
+    padding-bottom: 0px !important;
+}
